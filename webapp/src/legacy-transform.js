@@ -196,11 +196,12 @@ function extractVisualLineGroups(runs) {
       continue;
     }
 
-    current.push(run);
-    if (run.lineBreak) {
+    if (run.lineBreak && current.length) {
       groups.push(current);
       current = [];
     }
+
+    current.push(run);
   }
 
   if (current.length) {
