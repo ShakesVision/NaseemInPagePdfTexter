@@ -1,0 +1,409 @@
+{
+  "pdfPath": "F:\\WORK\\Pent\\NaseemInPagePdfTexter\\hp1.pdf",
+  "targetPageNumber": 5,
+  "runCount": 963,
+  "transformedLength": 2296,
+  "sampleRuns": [
+    {
+      "pageNumber": 5,
+      "fontName": "AACZAL+NOORIN63",
+      "x": 545.52,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AABCAH+NOORIN56",
+      "x": 527.64,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAEBAG+NOORIN85",
+      "x": 516.36,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAEYAH+NOORIN82",
+      "x": 504.48,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAWXAE+NOORIN01",
+      "x": 504.24,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AACZAL+NOORIN63",
+      "x": 486.72,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAWBAB+NOORIN05",
+      "x": 475.56,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAXAAJ+NOORIN14",
+      "x": 467.4,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAWXAE+NOORIN01",
+      "x": 460.92,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAYBAZ+NOORIN25",
+      "x": 449.04,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAECAI+NOORIN86",
+      "x": 449.04,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAYXAC+NOORIN21",
+      "x": 431.88,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAWAAV+NOORIN04",
+      "x": 417.72,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAWXAE+NOORIN01",
+      "x": 414.48,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAXAAJ+NOORIN14",
+      "x": 390.48,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AACZAL+NOORIN63",
+      "x": 373.68,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAWFAN+NOORIN09",
+      "x": 363,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAWXAE+NOORIN01",
+      "x": 353.04,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AABCAH+NOORIN56",
+      "x": 334.92,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAXAAJ+NOORIN14",
+      "x": 319.32,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAEXAF+NOORIN81",
+      "x": 308.64,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAWXAE+NOORIN01",
+      "x": 299.16,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAEYAH+NOORIN82",
+      "x": 289.8,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAWXAE+NOORIN01",
+      "x": 285.24,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAXYAS+NOORIN12",
+      "x": 267.72,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAWXAE+NOORIN01",
+      "x": 260.52,
+      "y": 697.56,
+      "bottom": 697.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": true
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAXDAK+NOORIN17",
+      "x": 522.96,
+      "y": 667.56,
+      "bottom": 667.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAWXAE+NOORIN01",
+      "x": 516.48,
+      "y": 667.56,
+      "bottom": 667.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAXAAJ+NOORIN14",
+      "x": 497.04,
+      "y": 667.56,
+      "bottom": 667.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAAEAE+NOORIN48",
+      "x": 487.44,
+      "y": 667.56,
+      "bottom": 667.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAWXAE+NOORIN01",
+      "x": 481.8,
+      "y": 667.56,
+      "bottom": 667.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAEYAH+NOORIN82",
+      "x": 476.52,
+      "y": 667.56,
+      "bottom": 667.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAWXAE+NOORIN01",
+      "x": 465.36,
+      "y": 667.56,
+      "bottom": 667.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AABCAH+NOORIN56",
+      "x": 446.88,
+      "y": 667.56,
+      "bottom": 667.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAWXAE+NOORIN01",
+      "x": 433.44,
+      "y": 667.56,
+      "bottom": 667.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAWBAB+NOORIN05",
+      "x": 411.24,
+      "y": 667.56,
+      "bottom": 667.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AABDAK+NOORIN57",
+      "x": 402.36,
+      "y": 667.56,
+      "bottom": 667.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAAEAE+NOORIN48",
+      "x": 385.56,
+      "y": 667.56,
+      "bottom": 667.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAEXAF+NOORIN81",
+      "x": 364.32,
+      "y": 667.56,
+      "bottom": 667.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    },
+    {
+      "pageNumber": 5,
+      "fontName": "AAECAI+NOORIN86",
+      "x": 364.32,
+      "y": 667.56,
+      "bottom": 667.56,
+      "fontSize": 18,
+      "text": "",
+      "lineBreak": false
+    }
+  ],
+  "preview": "کوشش تھی کہ ان کاہونہاربیٹاکبھی بھی اس قسم کےبچوں سےمیل جول نہ رکھے\n۔ہماری کہانی وہاں سےشروع ہوتی ہےجب مسٹرومسزڈرسلی ،اس بوجھل اوراُداس منگل کےدن سوکربیدارہوئےتھے۔بادلوں سےبھرےہوئےآسمان کودیکھ کرکوئی بھی یہ سوچ نہیں سکتاتھاکہ پوراملک عجیب وغریب قسم کےبھیانک حادثات کی لپیٹ میں آنےوالاہے۔مسٹرڈرسلی نےگنگناتےہوئےدفترجانےکی تیاری شروع کردی اورالماری میں سےسب حرسےبیزارکن ٹائی نکالی ۔مسزڈرسلی چہکتےہوئےادھرادھرکی باتیں کرتی رہیں ۔اس کےساتھ ساتھ وہ غلغلہ مچاتےہوئےننھےڈڈلی کواونچی کرسی میں بٹھانےکی کوششمیں اس کےساتھ زوردارقسم کی کشتی بھی کرتی ہوئی دکھائی دےرہی تھیں\n۔ان میں سےکسی کوبھی نہیں وہ دل دہلادینےوالامنظرنہیں دکھائی دےپایاکہ ایک بڑاسا\nا\nل\nو\nاپنےپروں کوزورسےپھڑپھڑاتاہو\nاان کےسامنےوالی کھڑکی کےآگےسےگزرگیاتھا۔ٹھیک ساڑھےآٹھ بجےمسٹرڈرسلی نےاپنادفتری بریف کیس اُٹھایا۔بےڈھنگیسی مسکراہٹ سےاپنی بیوی کوالوداع کہااورجھک کراپنےپیارےبیٹےڈڈلی کاگال چومنےکی کوشش کی مگرانہیں ناکامی کاسامناکرناپڑاکیونکہ ڈڈلی نےاس وقت جھنجلایاہوادکھائی دےرہاتھااوراپناناشتہ بری طرح سےادھرادھرپٹخ رہاتھا\n۔کھول ہ ’’شیطان کہیں "
+}

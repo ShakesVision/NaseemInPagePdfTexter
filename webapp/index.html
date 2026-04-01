@@ -35,11 +35,27 @@
 
           <div class="space-y-4">
             <label class="block">
+              <span class="mb-2 block text-sm font-medium text-stone-200">Input source</span>
+              <select id="source-mode" class="w-full rounded-2xl border border-stone-700 bg-stone-950 px-3 py-3 text-sm text-stone-200">
+                <option value="raw">Legacy Raw Files (Recommended)</option>
+                <option value="pdf">PDF in Browser (Experimental)</option>
+              </select>
+            </label>
+
+            <label class="block">
               <span class="mb-2 block text-sm font-medium text-stone-200">PDF file</span>
               <input id="pdf-file" type="file" accept="application/pdf" class="block w-full rounded-2xl border border-stone-700 bg-stone-950 px-3 py-3 text-sm text-stone-200 file:mr-4 file:rounded-xl file:border-0 file:bg-amber-400 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-stone-950 hover:file:bg-amber-300" />
             </label>
 
-            <div class="grid gap-3 sm:grid-cols-3 xl:grid-cols-1 2xl:grid-cols-3">
+            <label class="block" id="raw-files-wrap">
+              <span class="mb-2 block text-sm font-medium text-stone-200">Legacy raw files</span>
+              <input id="raw-files" type="file" accept=".txt" multiple class="block w-full rounded-2xl border border-stone-700 bg-stone-950 px-3 py-3 text-sm text-stone-200 file:mr-4 file:rounded-xl file:border-0 file:bg-amber-400 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-stone-950 hover:file:bg-amber-300" />
+              <p class="mt-2 text-xs leading-5 text-stone-400">
+                Import one or more `page-*-legacy-raw.txt` files produced by the CLI. This path keeps the legacy font-aware extraction and is currently the most reliable.
+              </p>
+            </label>
+
+            <div id="pdf-page-controls" class="grid gap-3 sm:grid-cols-3 xl:grid-cols-1 2xl:grid-cols-3">
               <label class="rounded-2xl border border-stone-800 bg-stone-950/70 p-3">
                 <span class="mb-2 block text-xs uppercase tracking-[0.24em] text-stone-400">Mode</span>
                 <select id="page-mode" class="w-full rounded-xl border border-stone-700 bg-stone-900 px-3 py-2 text-sm">
@@ -57,6 +73,17 @@
               <label class="rounded-2xl border border-stone-800 bg-stone-950/70 p-3">
                 <span class="mb-2 block text-xs uppercase tracking-[0.24em] text-stone-400">End</span>
                 <input id="end-page" type="number" min="1" value="5" class="w-full rounded-xl border border-stone-700 bg-stone-900 px-3 py-2 text-sm" />
+              </label>
+            </div>
+
+            <div class="grid gap-3 sm:grid-cols-2">
+              <label class="rounded-2xl border border-stone-800 bg-stone-950/70 p-3">
+                <span class="mb-2 block text-xs uppercase tracking-[0.24em] text-stone-400">Break Mode</span>
+                <select id="break-mode" class="w-full rounded-xl border border-stone-700 bg-stone-900 px-3 py-2 text-sm">
+                  <option value="paragraph">Paragraph</option>
+                  <option value="line">Line</option>
+                  <option value="none">Flat</option>
+                </select>
               </label>
             </div>
 
@@ -93,7 +120,8 @@
             <h3 class="mb-2 text-sm font-semibold text-amber-100">Runtime notes</h3>
             <ul class="space-y-2 text-sm leading-6 text-stone-300">
               <li>Uses the original XML mapping files from the legacy app.</li>
-              <li>Processes selected pages in-browser with PDF.js.</li>
+              <li>`Paragraph` mode is now the default output mode.</li>
+              <li>Legacy raw file import is the reliable path; direct PDF extraction remains experimental.</li>
               <li>Page 5 is the default starting point for the supplied sample PDF.</li>
             </ul>
           </div>

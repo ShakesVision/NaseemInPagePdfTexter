@@ -1,11 +1,63 @@
-function getFontFamily(item, styles) {
-  const style = styles[item.fontName] ?? {};
-  return style.fontFamily || item.fontName || "Unknown";
+function pickFirstString(values) {
+  return values.find((value) => typeof value === "string" && value.trim());
 }
 
-function isLikelyBold(item, styles) {
-  const fontFamily = getFontFamily(item, styles);
-  return /bold/i.test(fontFamily);
+function getCommonObjData(page, fontName) {
+  try {
+    const commonObjs = page.commonObjs;
+    if (!commonObjs) {
+      return null;
+    }
+
+    if (typeof commonObjs.has === "function" && !commonObjs.has(fontName)) {
+      return null;
+    }
+
+    if (typeof commonObjs.get === "function") {
+      return commonObjs.get(fontName);
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
+function getResolvedFontName(page, item, styles) {
+  const style = styles[item.fontName] ?? {};
+  const commonObj = getCommonObjData(page, item.fontName);
+
+  const resolved = pickFirstString([
+    commonObj?.psName,
+    commonObj?.name,
+    commonObj?.fontName,
+    commonObj?.loadedName,
+    commonObj?.fallbackName,
+    commonObj?.cssFontInfo?.fontFamily,
+    style.fontSubstitution,
+    style.fontFamily,
+    item.fontName,
+  ]) || "Unknown";
+
+  return {
+    rawFontName: item.fontName || "Unknown",
+    resolvedFontName: resolved,
+    commonObj,
+    style,
+  };
+}
+
+function isLikelyBold(fontInfo) {
+  return /bold/i.test(
+    [
+      fontInfo.resolvedFontName,
+      fontInfo.commonObj?.psName,
+      fontInfo.commonObj?.name,
+      fontInfo.style?.fontFamily,
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
 }
 
 function getFontSize(item) {
@@ -19,6 +71,11 @@ function getBottom(item) {
 
 export async function extractLegacyLikeRuns(pdfDocument, pageNumber, options = {}) {
   const page = await pdfDocument.getPage(pageNumber);
+  try {
+    await page.getOperatorList();
+  } catch {
+    // Best-effort only. Some PDF.js builds may not expose useful commonObjs data here.
+  }
   const textContent = await page.getTextContent();
   const runs = [];
 
@@ -29,7 +86,8 @@ export async function extractLegacyLikeRuns(pdfDocument, pageNumber, options = {
   let ligatureRepeatCount = 0;
 
   for (const item of textContent.items) {
-    const fontName = getFontFamily(item, textContent.styles);
+    const fontInfo = getResolvedFontName(page, item, textContent.styles);
+    const fontName = fontInfo.resolvedFontName;
     const fontSize = getFontSize(item);
     const bottom = getBottom(item);
     const lineBreak = Boolean(
@@ -53,7 +111,12 @@ export async function extractLegacyLikeRuns(pdfDocument, pageNumber, options = {
 
     runs.push({
       pageNumber,
-      fontName: isLikelyBold(item, textContent.styles) ? `${fontName}-Bold` : fontName,
+      fontName: isLikelyBold(fontInfo) ? `${fontName}-Bold` : fontName,
+      rawFontName: fontInfo.rawFontName,
+      resolvedFontName: fontInfo.resolvedFontName,
+      styleFontFamily: fontInfo.style?.fontFamily || "",
+      psName: fontInfo.commonObj?.psName || "",
+      loadedName: fontInfo.commonObj?.loadedName || "",
       fontSize,
       bottom,
       lineBreak,

@@ -84,11 +84,34 @@ const SKIP_RULES = [
 ];
 
 function cleanFont(fontName = "") {
-  const upper = fontName.toUpperCase().replace(/\s+/g, "");
-  return FONT_CLEAN_MAP.get(upper) ?? upper;
+  let font = fontName.toUpperCase().replace(/['"\s]/g, "");
+
+  if (font.includes("+")) {
+    const match = font
+      .split("+")
+      .find((part) => part.includes("NOORI") || part.includes("JAMEEL"));
+    if (match) {
+      font = match;
+    }
+  }
+
+  if (font.includes("-")) {
+    const match = font
+      .split("-")
+      .find((part) => part.includes("NOORI") || part.includes("JAMEEL"));
+    if (match) {
+      font = match;
+    }
+  }
+
+  return FONT_CLEAN_MAP.get(font) ?? font;
 }
 
 function getCharDefault(chCode, font) {
+  if (chCode >= 0xf000 && chCode <= 0xf0ff) {
+    chCode -= 0xf000;
+  }
+
   if (HIGH_CHAR_MAP.has(chCode)) {
     return HIGH_CHAR_MAP.get(chCode);
   }
@@ -135,6 +158,203 @@ function cleanLines(text, options) {
       return cleaned;
     })
     .join("\n");
+}
+
+function toFlatText(text) {
+  return text
+    .split(/\r?\n+/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .join("");
+}
+
+function splitUrduSentences(text) {
+  const stop = String.fromCharCode(0x06d4);
+  const sentences = [];
+  let start = 0;
+
+  for (let index = 0; index < text.length; index += 1) {
+    if (text[index] === stop) {
+      sentences.push(text.slice(start, index + 1));
+      start = index + 1;
+    }
+  }
+
+  if (start < text.length) {
+    sentences.push(text.slice(start));
+  }
+
+  return sentences.filter(Boolean);
+}
+
+function extractVisualLineGroups(runs) {
+  const groups = [];
+  let current = [];
+
+  for (const run of runs) {
+    if (!run?.text?.trim()) {
+      continue;
+    }
+
+    current.push(run);
+    if (run.lineBreak) {
+      groups.push(current);
+      current = [];
+    }
+  }
+
+  if (current.length) {
+    groups.push(current);
+  }
+
+  return groups;
+}
+
+function getMedian(values) {
+  const filtered = values.filter((value) => Number.isFinite(value)).sort((a, b) => a - b);
+  if (!filtered.length) {
+    return 0;
+  }
+  return filtered[Math.floor(filtered.length / 2)];
+}
+
+function buildLineLayoutInfo(decodedLines, runs) {
+  const rawLines = extractVisualLineGroups(runs);
+  if (rawLines.length !== decodedLines.length) {
+    return [];
+  }
+
+  return rawLines.map((rawLine, index) => {
+    const xs = rawLine.map((run) => run.x).filter((value) => Number.isFinite(value));
+    const startX = xs.length ? Math.max(...xs) : Number.NaN;
+    const endX = xs.length ? Math.min(...xs) : Number.NaN;
+    return {
+      text: decodedLines[index],
+      startX,
+      endX,
+      width: Number.isFinite(startX) && Number.isFinite(endX) ? startX - endX : Number.NaN,
+    };
+  });
+}
+
+function applyParagraphModeFromLines(text, runs) {
+  const decodedLines = text
+    .split(/\r?\n+/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  if (decodedLines.length <= 1) {
+    return decodedLines[0] ?? "";
+  }
+
+  const lineInfo = buildLineLayoutInfo(decodedLines, runs);
+  if (!lineInfo.length) {
+    return applyParagraphMode(text);
+  }
+
+  const medianLen = getMedian(lineInfo.map((line) => line.text.length));
+  const medianWidth = getMedian(lineInfo.map((line) => line.width));
+  const medianStartX = getMedian(lineInfo.map((line) => line.startX));
+  const strongStarters = /^(ہماری|ان|کھول|شہر|جب|وہ|یہ|اسی|پھر|مگر|لیکن|ممکن|مسٹر|مسز|ٹھیک)/;
+  const shortLenThreshold = medianLen * 0.9;
+  const shortWidthThreshold = medianWidth * 0.72;
+  const indentThreshold = 12;
+
+  const paragraphs = [];
+  let current = lineInfo[0].text;
+
+  for (let index = 1; index < lineInfo.length; index += 1) {
+    const previous = lineInfo[index - 1];
+    const currentLine = lineInfo[index];
+    const previousShort =
+      previous.text.length < shortLenThreshold ||
+      (Number.isFinite(previous.width) && previous.width < shortWidthThreshold);
+    const currentIndented =
+      Number.isFinite(currentLine.startX) &&
+      Number.isFinite(medianStartX) &&
+      currentLine.startX < medianStartX - indentThreshold;
+    const shouldBreak =
+      previousShort ||
+      (currentIndented && strongStarters.test(currentLine.text));
+
+    if (shouldBreak) {
+      paragraphs.push(current);
+      current = currentLine.text;
+      continue;
+    }
+
+    current += currentLine.text;
+  }
+
+  if (current) {
+    paragraphs.push(current);
+  }
+
+  return paragraphs.join("\n");
+}
+
+function applyParagraphMode(text) {
+  const flat = toFlatText(text);
+  const sentences = splitUrduSentences(flat);
+  if (sentences.length <= 1) {
+    return flat;
+  }
+
+  const strongStarters = /^(ہماری|ان|کھول|شہر|جب|وہ|یہ|اسی|پھر|مگر|لیکن|ممکن|مسٹر|مسز|ٹھیک)/;
+  const paragraphs = [];
+  let current = "";
+  let currentSentenceCount = 0;
+
+  for (let index = 0; index < sentences.length; index += 1) {
+    const sentence = sentences[index];
+    const trimmed = sentence.trim();
+    if (!trimmed) {
+      continue;
+    }
+
+    if (!current) {
+      current = trimmed;
+      currentSentenceCount = 1;
+      continue;
+    }
+
+    const remaining = sentences.slice(index).join("").trim().length;
+    const nextStartsStrong = strongStarters.test(trimmed);
+    const shouldBreak =
+      (paragraphs.length === 0 && currentSentenceCount === 1 && current.length <= 120) ||
+      (current.length >= 380 && current.length <= 650 && nextStartsStrong) ||
+      (remaining <= 140 && current.length >= 80);
+
+    if (shouldBreak) {
+      paragraphs.push(current);
+      current = trimmed;
+      currentSentenceCount = 1;
+      continue;
+    }
+
+    current += trimmed;
+    currentSentenceCount += 1;
+  }
+
+  if (current) {
+    paragraphs.push(current);
+  }
+
+  return paragraphs.join("\n");
+}
+
+function applyBreakMode(text, options, runs = []) {
+  const mode = options.newlineMode ?? "paragraph";
+  if (mode === "none") {
+    return toFlatText(text);
+  }
+  if (mode === "line") {
+    return text;
+  }
+  if (runs.length && text.includes("\n")) {
+    return applyParagraphModeFromLines(text, runs);
+  }
+  return applyParagraphMode(text);
 }
 
 function removeBoldness(text, options, firstBoldLigature) {
@@ -231,6 +451,7 @@ export function transformLegacyRuns(runs, mappings, options = {}) {
   const resolvedOptions = {
     skipEnglishWords: true,
     lineFeed: true,
+    newlineMode: "paragraph",
     swapText: true,
     ...options,
   };
@@ -316,5 +537,5 @@ export function transformLegacyRuns(runs, mappings, options = {}) {
     }
   }
 
-  return cleanString(output, resolvedOptions, firstBoldLigature);
+  return applyBreakMode(cleanString(output, resolvedOptions, firstBoldLigature), resolvedOptions, runs);
 }

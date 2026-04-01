@@ -1,10 +1,11 @@
-param(
+﻿param(
     [Parameter(Mandatory = $true)]
     [string]$PdfPath,
     [int]$StartPage = 5,
     [int]$EndPage = 7,
     [switch]$UseLegacyStrategy,
-    [int]$SampleLength = 300
+    [int]$SampleLength = 300,
+    [string]$RawTextPath
 )
 
 $resolvedPdfPath = (Resolve-Path $PdfPath).Path
@@ -16,6 +17,7 @@ if ($UseLegacyStrategy) {
     $source = @"
 using System;
 using System.Text;
+using System.Globalization;
 using iTextSharp.text.pdf.parser;
 
 public static class LegacyProbeSupport
@@ -38,6 +40,8 @@ public static class LegacyProbeSupport
         private Vector lastBaseLine;
         private string lastFont;
         private float lastFontSize;
+        private const char LineFeedMarker = '\u06E9';
+        private const char FauxBoldMarker = '\u06DE';
 
         private static int LigatureRepeatCount = 0;
         private static string LastFont = string.Empty;
@@ -73,11 +77,19 @@ public static class LegacyProbeSupport
                 float last = LastRectBottom - LastFontSize;
                 if (rect.Bottom < last)
                 {
-                    this.result.AppendLine("۩");
+                    this.result.Append(LineFeedMarker);
                 }
 
                 this.result.Append(curFont);
-                this.result.Append("<=;=>-<=;=>");
+                this.result.Append("<=;=>");
+                this.result.Append(curBaseline[Vector.I1].ToString("0.###", CultureInfo.InvariantCulture));
+                this.result.Append("|");
+                this.result.Append(curBaseline[Vector.I2].ToString("0.###", CultureInfo.InvariantCulture));
+                this.result.Append("|");
+                this.result.Append(rect.Bottom.ToString("0.###", CultureInfo.InvariantCulture));
+                this.result.Append("|");
+                this.result.Append(curFontSize.ToString("0.###", CultureInfo.InvariantCulture));
+                this.result.Append("<=;=>");
             }
 
             string currText = renderInfo.GetText();
@@ -95,7 +107,7 @@ public static class LegacyProbeSupport
                 LigatureRepeatCount = 0;
                 LastText = string.Empty;
                 LastFont = string.Empty;
-                currText += "۞";
+                currText += FauxBoldMarker;
             }
 
             this.result.Append(currText);
@@ -142,6 +154,15 @@ try {
 
         $sample = $text.Substring(0, [Math]::Min($SampleLength, $text.Length))
         $sample = $sample.Replace("`r", " ").Replace("`n", " ")
+
+        if ($RawTextPath) {
+            $resolvedRawTextPath = $RawTextPath.Replace("{page}", $page)
+            $directory = Split-Path -Parent $resolvedRawTextPath
+            if ($directory) {
+                New-Item -ItemType Directory -Force -Path $directory | Out-Null
+            }
+            [System.IO.File]::WriteAllText((Resolve-Path -LiteralPath .).Path + "\" + $resolvedRawTextPath, $text, [System.Text.Encoding]::UTF8)
+        }
 
         [pscustomobject]@{
             Page = $page
